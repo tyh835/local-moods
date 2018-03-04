@@ -1,4 +1,4 @@
-const apiKey = 'qtmJhKy8QUVzBV8Yeyv0QrWzA6EajgTwABU08nkp_SKBPyxh2eE2azsZ_Db-eQEjjQCjcejsZN9sGOSXgGU46zcUDvsNzQKzQKirQdwm-xq41wNh_iKN3QLnQzObWnYx';
+const apiKey = 'p3cbSVd0pECM4rpBSEUI4mL4kwyEDS3QLNcXygIuAQE1lrIynv0PIHYVXB4ex6iSFQv3jhI1fPv9OEUQ13bw3uZKvwZIos9iK_8AEFC62yj4uXfvWwhUNtzlvmabWnYx';
 const Yelp = {
   search(term, location, sortBy) {
     return fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}`, {
