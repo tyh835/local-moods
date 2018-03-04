@@ -9,6 +9,8 @@
 .Business .image-container {
   height: 16.66rem;
   margin-bottom: 1rem;
+  background-color: white;
+  text-align: center;
 }
 
 .Business h2 {
