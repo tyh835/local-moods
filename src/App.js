@@ -14,7 +14,17 @@ class App extends React.Component {
   }
 
   searchYelp(term, location, sortBy) {
-    Yelp.search(term, location, sortBy).then(businesses => {this.setState({businesses: businesses})});
+    if(term.trim() === '' && location.trim() === '') {
+      this.setState({businesses: "Please enter a business name and location"});
+      return;
+    } else if (term.trim() === '') {
+      this.setState({businesses: "Please enter a business name"});
+      return;
+    } else if (location.trim() === '') {
+      this.setState({businesses: "Please enter a location"});
+    } else {
+      Yelp.search(term, location, sortBy).then(businesses => {this.setState({businesses: businesses})});
+    }
   }
 
   render() {

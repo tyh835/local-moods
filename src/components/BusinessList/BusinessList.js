@@ -4,6 +4,9 @@ import Business from '../Business/Business';
 
 class BusinessList extends React.Component {
   render() {
+    if (typeof this.props.businesses === "string") {
+      return <h3>{this.props.businesses}</h3>;
+    }
     return (
     <div className="BusinessList">
       {
