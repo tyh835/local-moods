@@ -9,7 +9,7 @@ class Business extends React.Component {
           <img src={this.props.business.imageSrc} alt={'No image for ' + this.props.business.name} />
         </div>
         <div className="Business-information">
-          <a href={`https://www.google.com/maps/search/?api=1&query=${this.props.business.name.split(' ').join('+')}+${this.props.business.address.split(' ').join('+')}+${this.props.business.city.split(' ').join('+')}+${this.props.business.state.split(' ').join('+')}`} title={`Find ${this.props.business.name} on Google Maps!`} target="_blank">
+          <a href={`https://www.google.com/maps/search/?api=1&query=${this.props.business.name.split(' ').filter(word => word !== '&').join('+')}+${this.props.business.address.split(' ').join('+')}+${this.props.business.city.split(' ').join('+')}+${this.props.business.state.split(' ').join('+')}`} title={`Find ${this.props.business.name} on Google Maps!`} target="_blank">
             <h2>{this.props.business.name}</h2>
             <div className="Business-address">
               <p><i className="fa fa-map-marker"></i> {this.props.business.address}</p>

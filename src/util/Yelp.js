@@ -1,4 +1,5 @@
-const apiKey = 'p3cbSVd0pECM4rpBSEUI4mL4kwyEDS3QLNcXygIuAQE1lrIynv0PIHYVXB4ex6iSFQv3jhI1fPv9OEUQ13bw3uZKvwZIos9iK_8AEFC62yj4uXfvWwhUNtzlvmabWnYx';
+const config = require('./config');
+const apiKey = process.env.YELP || config.key;
 const Yelp = {
   search(term, location, sortBy) {
     return fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}`, {
