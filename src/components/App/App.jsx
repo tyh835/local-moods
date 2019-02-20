@@ -86,7 +86,7 @@ class App extends Component {
     const { businesses, message, search } = this.state;
     return (
       <div className="App">
-        <h1>MoodFoods</h1>
+        <h1>LocalMoods</h1>
         <SearchBar
           handleInputChange={this.handleInputChange}
           handleSortByChange={this.handleSortByChange}
@@ -94,14 +94,13 @@ class App extends Component {
           search={search}
           searchYelp={this.searchYelp}
         />
-        {/* <InfiniteScroll
+        <InfiniteScroll
           dataLength={businesses.length}
           next={this.searchYelp}
           hasMore={true}
-          loader={<h3>Loading...</h3>}
-        > */}
-        <BusinessList businesses={businesses} message={message} />
-        {/* </InfiniteScroll> */}
+        >
+          <BusinessList businesses={businesses} message={message} />
+        </InfiniteScroll>
       </div>
     );
   }

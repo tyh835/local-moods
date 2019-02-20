@@ -36,7 +36,7 @@ const SearchBar = ({
       </div>
       <div className="SearchBar-fields">
         <input
-          placeholder="Search Restaurants"
+          placeholder="Search Yelp"
           name="searchTerm"
           value={searchTerm}
           onChange={handleInputChange}
