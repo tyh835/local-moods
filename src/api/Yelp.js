@@ -1,5 +1,6 @@
 const APP_KEY = process.env.REACT_APP_YELP || 'PLACEYOURYELPKEYHERE';
-const Yelp = {
+
+export default {
   search(term, location, sortBy) {
     return fetch(
       `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}`,
@@ -7,19 +8,16 @@ const Yelp = {
         headers: { Authorization: `Bearer ${APP_KEY}` }
       }
     )
+      .then(response => response.json())
       .then(response => {
-        return response.json();
-      })
-      .then(jsonResponse => {
         if (
-          jsonResponse.businesses &&
-          jsonResponse.businesses.every(business => {
+          response.businesses &&
+          response.businesses.every(business => {
             return business !== undefined;
           }) &&
-          jsonResponse.businesses.length !== 0
+          response.businesses.length !== 0
         ) {
-          console.log(jsonResponse.businesses);
-          return jsonResponse.businesses.map(business => {
+          return response.businesses.map(business => {
             return {
               id: business.id,
               imageSrc: business.image_url,
@@ -42,5 +40,3 @@ const Yelp = {
       });
   }
 };
-
-export default Yelp;
