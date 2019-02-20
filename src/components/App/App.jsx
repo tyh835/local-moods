@@ -47,7 +47,18 @@ class App extends Component {
     }
   };
 
-  searchYelp = () => {
+  increaseOffset = () => {
+    this.setState(state => {
+      return {
+        search: {
+          ...state.search,
+          offset: state.search.offset + 20
+        }
+      };
+    });
+  };
+
+  searchYelp = async () => {
     const { searchTerm, location, sortBy, offset } = this.state.search;
     const s = searchTerm.trim();
     const l = location.trim();
@@ -62,24 +73,16 @@ class App extends Component {
     }
     if (message) return this.setState({ businesses: [], message });
 
-    Yelp.search(searchTerm, location, sortBy, offset)
-      .then(response => {
-        this.setState(state => ({
-          businesses: [...state.businesses, ...response]
-        }));
-      })
-      .catch(err => {
-        this.setState({ message: err.message });
-      });
+    try {
+      const response = await Yelp.search(searchTerm, location, sortBy, offset);
+      this.setState(state => ({
+        businesses: [...state.businesses, ...response.data]
+      }));
+    } catch (err) {
+      this.setState({ message: err.message });
+    }
 
-    this.setState(state => {
-      return {
-        search: {
-          ...state.search,
-          offset: state.search.offset + 20
-        }
-      };
-    });
+    this.increaseOffset();
   };
 
   render() {
