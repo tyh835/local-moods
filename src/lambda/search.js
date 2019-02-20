@@ -13,43 +13,38 @@ export async function handler(event, context, callback) {
       }
     );
     const { businesses } = response.data;
-    if (
-      businesses &&
-      businesses.every(business => {
-        return business !== undefined;
-      }) &&
-      businesses.length !== 0
-    ) {
-      const data = businesses.map(business => {
-        return {
-          id: business.id,
-          imageSrc: business.image_url,
-          name: business.name || 'No Name',
-          address: business.location.address1 || 'No Address',
-          city: business.location.city || '',
-          state: business.location.state || '',
-          zipCode: business.location.zip_code,
-          category: business.categories[0]
-            ? business.categories[0].title
-            : 'No Category',
-          rating: business.rating,
-          reviewCount: business.review_count,
-          url: business.url
-        };
-      });
 
-      callback(null, {
-        statusCode: 200,
-        body: JSON.stringify({ businesses: data })
-      });
-    } else {
-      callback(null, {
+    const data = businesses.map(business => {
+      return {
+        id: business.id,
+        imageSrc: business.image_url,
+        name: business.name || 'No Name',
+        address: business.location.address1 || 'No Address',
+        city: business.location.city || '',
+        state: business.location.state || '',
+        zipCode: business.location.zip_code,
+        category: business.categories[0]
+          ? business.categories[0].title
+          : 'No Category',
+        rating: business.rating,
+        reviewCount: business.review_count,
+        url: business.url
+      };
+    });
+
+    callback(null, {
+      statusCode: 200,
+      body: JSON.stringify({ businesses: data })
+    });
+  } catch (err) {
+    console.log(err); // Log stderr to Netlify
+    if (err.statusCode === 400) {
+      return callback(null, {
         statusCode: 204,
         body: JSON.stringify({ businesses: [] })
       });
     }
-  } catch (err) {
-    console.log(err); // Log stderr to Netlify
+
     callback(err);
   }
 }
