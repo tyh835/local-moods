@@ -10,40 +10,28 @@ class App extends Component {
     message: ''
   };
 
-  searchYelp = (term, location, sortBy) => {
-    if (term.trim() === '' && location.trim() === '') {
-      this.setState({
-        businesses: [],
-        message: 'Please enter a business name and location'
-      });
-      return;
-    } else if (term.trim() === '') {
-      this.setState({
-        businesses: [],
-        message: 'Please enter a business name'
-      });
-      return;
-    } else if (location.trim() === '') {
-      this.setState({ businesses: [], message: 'Please enter a location' });
-    } else {
-      Yelp.search(term, location, sortBy)
-        .then(businesses => {
-          if (typeof businesses === 'string') {
-            return this.setState({
-              businesses: [],
-              message: businesses
-            });
-          }
+  searchYelp = (searchTerm, location, sortBy) => {
+    const s = searchTerm.trim();
+    const l = location.trim();
+    let message = '';
 
-          this.setState({ businesses: businesses, message: '' });
-        })
-        .catch(err =>
-          this.setState({
-            businesses: [],
-            message: err.message
-          })
-        );
+    if (s === '' && l === '') {
+      message = 'Please enter a business name and location';
+    } else if (s === '') {
+      message = 'Please enter a business name';
+    } else if (l === '') {
+      message = 'Please enter a location';
     }
+    if (message) return this.setState({ businesses: [], message });
+
+    Yelp.search(searchTerm, location, sortBy)
+      .then(businesses => {
+        this.setState({ businesses });
+      })
+      .catch(err => {
+        const { message } = err;
+        this.setState({ message });
+      });
   };
 
   render() {

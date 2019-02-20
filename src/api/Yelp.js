@@ -1,9 +1,9 @@
 const APP_KEY = process.env.REACT_APP_YELP || 'PLACEYOURYELPKEYHERE';
 
 export default {
-  search(term, location, sortBy) {
+  search(searchTerm, location, sortBy) {
     return fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}`,
+      `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${searchTerm}&location=${location}&sort_by=${sortBy}`,
       {
         headers: { Authorization: `Bearer ${APP_KEY}` }
       }
@@ -35,7 +35,7 @@ export default {
             };
           });
         } else {
-          return 'Sorry no results were found';
+          throw Error('Sorry no results were found');
         }
       });
   }
