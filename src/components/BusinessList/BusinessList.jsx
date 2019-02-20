@@ -4,9 +4,7 @@ import './BusinessList.scss';
 
 const BusinessList = ({ businesses, message }) => {
   return message ? (
-    <div className="BusinessList">
-      <h3>{message}</h3>
-    </div>
+    <h3>{message}</h3>
   ) : (
     <div className="BusinessList">
       {businesses &&
