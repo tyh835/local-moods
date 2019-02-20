@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import BusinessList from '../BusinessList/BusinessList';
 import SearchBar from '../SearchBar/SearchBar';
 import Yelp from '../../api/Yelp';
@@ -7,10 +8,47 @@ import './App.scss';
 class App extends Component {
   state = {
     businesses: [],
-    message: ''
+    message: '',
+    search: {
+      searchTerm: '',
+      location: '',
+      sortBy: 'best_match',
+      offset: 0
+    }
   };
 
-  searchYelp = (searchTerm, location, sortBy) => {
+  handleSortByChange = sortByOption => {
+    this.setState(state => ({
+      businesses: [],
+      search: {
+        ...state.search,
+        sortBy: sortByOption,
+        offset: 0
+      }
+    }));
+    this.searchYelp();
+  };
+
+  handleInputChange = e => {
+    e.persist();
+    this.setState(state => ({
+      businesses: [],
+      search: {
+        ...state.search,
+        [e.target.name]: e.target.value,
+        offset: 0
+      }
+    }));
+  };
+
+  handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.searchYelp();
+    }
+  };
+
+  searchYelp = () => {
+    const { searchTerm, location, sortBy, offset } = this.state.search;
     const s = searchTerm.trim();
     const l = location.trim();
     let message = '';
@@ -24,23 +62,46 @@ class App extends Component {
     }
     if (message) return this.setState({ businesses: [], message });
 
-    Yelp.search(searchTerm, location, sortBy)
-      .then(businesses => {
-        this.setState({ businesses });
+    Yelp.search(searchTerm, location, sortBy, offset)
+      .then(response => {
+        this.setState(state => ({
+          businesses: [...state.businesses, ...response]
+        }));
       })
       .catch(err => {
-        const { message } = err;
-        this.setState({ message });
+        this.setState({ message: err.message });
       });
+
+    this.setState(state => {
+      return {
+        search: {
+          ...state.search,
+          offset: state.search.offset + 20
+        }
+      };
+    });
   };
 
   render() {
-    const { businesses, message } = this.state;
+    const { businesses, message, search } = this.state;
     return (
       <div className="App">
         <h1>MoodFoods</h1>
-        <SearchBar searchYelp={this.searchYelp} />
+        <SearchBar
+          handleInputChange={this.handleInputChange}
+          handleSortByChange={this.handleSortByChange}
+          handleKeyPress={this.handleKeyPress}
+          search={search}
+          searchYelp={this.searchYelp}
+        />
+        {/* <InfiniteScroll
+          dataLength={businesses.length}
+          next={this.searchYelp}
+          hasMore={true}
+          loader={<h3>Loading...</h3>}
+        > */}
         <BusinessList businesses={businesses} message={message} />
+        {/* </InfiniteScroll> */}
       </div>
     );
   }
