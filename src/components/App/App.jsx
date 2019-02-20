@@ -76,10 +76,11 @@ class App extends Component {
     try {
       const response = await Yelp.search(searchTerm, location, sortBy, offset);
       this.setState(state => ({
+        message: '',
         businesses: [...state.businesses, ...response.data]
       }));
     } catch (err) {
-      this.setState({ message: err.message });
+      this.setState({ business: [], message: err.message });
     }
 
     this.increaseOffset();
