@@ -1,4 +1,4 @@
-const APP_KEY = process.env.REACT_APP_YELP || 'PLACEYOURYELPKEYHERE';
+const APP_KEY = process.env.REACT_APP_YELP || 'PLACE_YOUR_YELP_KEY_HERE';
 
 export default {
   search(searchTerm, location, sortBy) {
