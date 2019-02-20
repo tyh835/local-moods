@@ -8,7 +8,7 @@ export default {
       );
       return response.data.businesses;
     } catch (err) {
-      throw err;
+      throw new Error(err.response.data.error.description);
     }
   }
 };

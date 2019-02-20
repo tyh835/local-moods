@@ -32,19 +32,15 @@ export async function handler(event, context, callback) {
       };
     });
 
-    callback(null, {
+    return {
       statusCode: 200,
       body: JSON.stringify({ businesses: data })
-    });
+    };
   } catch (err) {
     console.log(err); // Log stderr to Netlify
-    if (err.response.status === 400) {
-      return callback(null, {
-        statusCode: 204,
-        body: JSON.stringify({ businesses: [] })
-      });
-    }
-
-    callback(err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify(err.response.data)
+    };
   }
 }

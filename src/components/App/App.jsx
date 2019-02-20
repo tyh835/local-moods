@@ -75,7 +75,9 @@ class App extends Component {
 
     try {
       const response = await Yelp.search(searchTerm, location, sortBy, offset);
-      if (!response) throw new Error('Sorry, no results were found');
+      if (response.length === 0) {
+        throw new Error('Sorry, no results were found');
+      }
       this.setState(state => ({
         message: '',
         businesses: [...state.businesses, ...response]
