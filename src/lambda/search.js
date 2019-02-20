@@ -40,7 +40,7 @@ export async function handler(event, context, callback) {
 
       return callback(null, {
         statusCode: 200,
-        body: JSON.stringify(data)
+        body: JSON.stringify({ businesses: data })
       });
     } else {
       const err = new Error('No results were obtained');

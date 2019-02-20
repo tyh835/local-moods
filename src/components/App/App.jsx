@@ -77,7 +77,7 @@ class App extends Component {
       const response = await Yelp.search(searchTerm, location, sortBy, offset);
       this.setState(state => ({
         message: '',
-        businesses: [...state.businesses, ...response.data]
+        businesses: [...state.businesses, ...response]
       }));
     } catch (err) {
       this.setState({ business: [], message: err.message });
