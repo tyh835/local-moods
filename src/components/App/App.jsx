@@ -90,7 +90,7 @@ class App extends Component {
     const { businesses, message, search } = this.state;
     return (
       <div className="App">
-        <h1>LocalMoods</h1>
+        <h1>Local Moods</h1>
         <SearchBar
           handleInputChange={this.handleInputChange}
           handleSortByChange={this.handleSortByChange}
