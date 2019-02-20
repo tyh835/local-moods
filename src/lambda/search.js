@@ -38,16 +38,18 @@ export async function handler(event, context, callback) {
         };
       });
 
-      return callback(null, {
+      callback(null, {
         statusCode: 200,
         body: JSON.stringify({ businesses: data })
       });
     } else {
-      const err = new Error('No results were obtained');
-      return callback(err);
+      callback(null, {
+        statusCode: 204,
+        body: JSON.stringify({ businesses: [] })
+      });
     }
   } catch (err) {
     console.log(err); // Log stderr to Netlify
-    return callback(err);
+    callback(err);
   }
 }

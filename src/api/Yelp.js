@@ -8,7 +8,7 @@ export default {
       );
       return response.data.businesses;
     } catch (err) {
-      throw Error('Sorry, no results were found');
+      throw err;
     }
   }
 };
