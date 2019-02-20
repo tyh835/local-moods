@@ -47,14 +47,12 @@ class App extends Component {
   };
 
   render() {
+    const { businesses, message } = this.state;
     return (
       <div className="App">
         <h1>MoodFoods</h1>
         <SearchBar searchYelp={this.searchYelp} />
-        <BusinessList
-          businesses={this.state.businesses}
-          message={this.state.message}
-        />
+        <BusinessList businesses={businesses} message={message} />
       </div>
     );
   }
