@@ -43,7 +43,8 @@ export async function handler(event, context, callback) {
         body: JSON.stringify(data)
       });
     } else {
-      return callback('Sorry, no results were found');
+      const err = new Error('No results were obtained');
+      return callback(err);
     }
   } catch (err) {
     console.log(err); // Log stderr to Netlify
