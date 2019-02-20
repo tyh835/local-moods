@@ -1,7 +1,10 @@
 .BusinessList {
-  display: flex;
+  display: grid;
   justify-content: space-around;
-  flex-wrap: wrap;
+  align-items: center;
+  grid-template: 450px / repeat(auto-fill, 16.66rem);
+  grid-auto-rows: 450px;
+  grid-gap: 2rem;
   margin: 4.4rem 10%;
 }
 
