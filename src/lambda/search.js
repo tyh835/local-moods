@@ -38,7 +38,7 @@ export async function handler(event, context, callback) {
     });
   } catch (err) {
     console.log(err); // Log stderr to Netlify
-    if (err.statusCode === 400) {
+    if (err.errorMessage === 'Request failed with status code 400') {
       return callback(null, {
         statusCode: 204,
         body: JSON.stringify({ businesses: [] })
