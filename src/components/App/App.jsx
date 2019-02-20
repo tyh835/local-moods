@@ -7,23 +7,42 @@ import './App.scss';
 class App extends Component {
   state = {
     businesses: [],
+    message: ''
   };
 
   searchYelp = (term, location, sortBy) => {
     if (term.trim() === '' && location.trim() === '') {
       this.setState({
-        businesses: 'Please enter a business name and location',
+        businesses: [],
+        message: 'Please enter a business name and location'
       });
       return;
     } else if (term.trim() === '') {
-      this.setState({ businesses: 'Please enter a business name' });
+      this.setState({
+        businesses: [],
+        message: 'Please enter a business name'
+      });
       return;
     } else if (location.trim() === '') {
-      this.setState({ businesses: 'Please enter a location' });
+      this.setState({ businesses: [], message: 'Please enter a location' });
     } else {
-      Yelp.search(term, location, sortBy).then(businesses => {
-        this.setState({ businesses: businesses });
-      });
+      Yelp.search(term, location, sortBy)
+        .then(businesses => {
+          if (typeof businesses === 'string') {
+            return this.setState({
+              businesses: [],
+              message: businesses
+            });
+          }
+
+          this.setState({ businesses: businesses, message: '' });
+        })
+        .catch(err =>
+          this.setState({
+            businesses: [],
+            message: err.message
+          })
+        );
     }
   };
 
@@ -32,7 +51,10 @@ class App extends Component {
       <div className="App">
         <h1>Moods</h1>
         <SearchBar searchYelp={this.searchYelp} />
-        <BusinessList businesses={this.state.businesses} />
+        <BusinessList
+          businesses={this.state.businesses}
+          message={this.state.message}
+        />
       </div>
     );
   }
