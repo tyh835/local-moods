@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config(); // For development configuration
 
-export async function handler(event, context, callback) {
+export async function handler(event, context) {
   try {
     const { term, location, sort_by, offset } = event.queryStringParameters;
     const response = await axios.get(
