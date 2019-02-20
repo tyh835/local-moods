@@ -1,20 +1,20 @@
 import React from 'react';
-import './BusinessList.scss';
 import Business from '../Business/Business';
+import './BusinessList.scss';
 
-class BusinessList extends React.Component {
-  render() {
-    if (typeof this.props.businesses === 'string') {
-      return <h3>{this.props.businesses}</h3>;
-    }
-    return (
-      <div className="BusinessList">
-        {this.props.businesses.slice(0, 18).map(business => {
+const BusinessList = ({ businesses, message }) => {
+  return message ? (
+    <div className="BusinessList">
+      <h3>{message}</h3>
+    </div>
+  ) : (
+    <div className="BusinessList">
+      {businesses &&
+        businesses.map(business => {
           return <Business key={business.id} business={business} />;
         })}
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default BusinessList;
